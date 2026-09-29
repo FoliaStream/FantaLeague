@@ -1,13 +1,11 @@
-import { ATTRIBUTES, formatDecimal, formatMoney } from '../utils/teamStats'
+import { ATTRIBUTES, formatDecimal } from '../utils/teamStats'
+
 
 export default function TeamStats({ stats }) {
   const summary = [
     ['Players', stats.count],
     ['Avg overall', formatDecimal(stats.avgOverall)],
-    ['Avg potential', formatDecimal(stats.avgPotential)],
     ['Avg age', formatDecimal(stats.avgAge)],
-    ['Total value', formatMoney(stats.totalValue)],
-    ['Total wage', formatMoney(stats.totalWage)],
   ]
 
   return (

@@ -80,3 +80,52 @@ body {
   color: #555;
 }
 .compare-attr-label { font-weight: 600; color: #222; }
+
+.lineup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.lineup-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  background: #fff;
+  font-size: 0.85rem;
+}
+.lineup-card.edited {
+  background: #fffaf0;
+  border-color: #e0b76b;
+}
+.lineup-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+.lineup-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.1rem 0;
+}
+.lineup-row select {
+  flex: 1;
+  font-size: 0.85rem;
+  padding: 0.1rem 0.2rem;
+}
+.lineup-badge {
+  display: inline-block;
+  width: 1.6rem;
+  text-align: center;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 0;
+}
+.lineup-badge.P { background: #d4a300; }
+.lineup-badge.D { background: #2b7a0b; }
+.lineup-badge.C { background: #1f6feb; }
+.lineup-badge.A { background: #c0392b; }

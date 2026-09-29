@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTeams, MAX_PLAYERS } from '../context/TeamsContext'
 import TeamStats from '../components/TeamStats'
-import { computeTeamStats, formatMoney } from '../utils/teamStats'
+import { computeTeamStats } from '../utils/teamStats'
 
 // lets "modric" match "Modrić"
 const normalize = (s) =>
@@ -121,7 +121,7 @@ export default function TeamBuilderPage() {
                     <th>Pos</th>
                     <th>Ovr</th>
                     <th>Age</th>
-                    <th>Value</th>
+                    <th>League</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -132,7 +132,7 @@ export default function TeamBuilderPage() {
                       <td>{p.player_positions}</td>
                       <td>{p.overall}</td>
                       <td>{p.age}</td>
-                      <td>{formatMoney(p.value_eur)}</td>
+                      <td>{p.league}</td>
                       <td>
                         <button onClick={() => removePlayer(activeTeam.id, p.player_id)}>
                           Remove

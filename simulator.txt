@@ -1,0 +1,26 @@
+        ┌───────────────────────────────┐
+        │   one Monte Carlo iteration    │
+        └───────────────────────────────┘
+                       │
+     ┌─────────────────┼─────────────────┐
+     ▼                 ▼                 ▼
+ Poisson says      Poisson says      Poisson says
+ Inter scores 2    Milan scores 1    ...other 9 matches
+     │                 │
+     ▼                 ▼
+ goals assigned    goals assigned
+ to Inter players  to Milan players
+ (weighted by      (weighted by
+ their scoring     their scoring
+ rates)            rates)
+     │                 │
+     ▼                 ▼
+ grades computed   grades computed
+ for each player   for each player
+     │                 │
+     └────────┬────────┘
+              ▼
+   sum grades for fantasy team A, B
+              │
+              ▼
+   compare: 68 pts vs 71 pts → 1-2 final

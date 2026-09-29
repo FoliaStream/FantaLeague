@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useTeams } from '../context/TeamsContext'
-import { ATTRIBUTES, computeTeamStats, formatDecimal, formatMoney } from '../utils/teamStats'
+import { ATTRIBUTES, computeTeamStats, formatDecimal } from '../utils/teamStats'
 
 const SUMMARY_METRICS = [
   { key: 'count', label: 'Players', higherIsBetter: null, format: (v) => v },
   { key: 'avgOverall', label: 'Avg overall', higherIsBetter: true, format: formatDecimal },
-  { key: 'avgPotential', label: 'Avg potential', higherIsBetter: true, format: formatDecimal },
   { key: 'avgAge', label: 'Avg age', higherIsBetter: false, format: formatDecimal },
-  { key: 'totalValue', label: 'Total value', higherIsBetter: true, format: formatMoney },
-  { key: 'totalWage', label: 'Total wage', higherIsBetter: false, format: formatMoney },
 ]
 
 export default function ComparePage() {

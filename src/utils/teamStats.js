@@ -49,10 +49,7 @@ export const ATTRIBUTES = [
     return {
       count: players.length,
       avgOverall: average(players, 'overall'),
-      avgPotential: average(players, 'potential'),
       avgAge: average(players, 'age'),
-      totalValue: sum(players, 'value_eur'),
-      totalWage: sum(players, 'wage_eur'),
       attributes,
       lines,
     }
