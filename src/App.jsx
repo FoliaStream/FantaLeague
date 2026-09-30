@@ -6,14 +6,15 @@ import SimulatePage from './pages/SimulatePage'
 
 export default function App() {
   return (
-    <>
-      <nav style={{ display: 'flex', gap: '1rem', padding: '1rem' }}>
-        <NavLink to="/">Players</NavLink>
-        <NavLink to="/teams">Team builder</NavLink>
-        <NavLink to="/compare">Compare</NavLink>
-        <NavLink to="/simulate">Simulate</NavLink>
+    <div className="app-shell">
+      <nav className="app-nav">
+        <span className="app-nav__brand">FantaLeague</span>
+        <NavLink to="/" end className="app-nav__link">Players</NavLink>
+        <NavLink to="/teams" className="app-nav__link">Team builder</NavLink>
+        <NavLink to="/compare" className="app-nav__link">Compare</NavLink>
+        <NavLink to="/simulate" className="app-nav__link">Simulate</NavLink>
       </nav>
-      <main style={{ padding: '0 1rem'}}>
+      <main className="app-main">
         <Routes>
           <Route path='/' element={<PlayersPage />} />
           <Route path='/teams' element={<TeamBuilderPage />} />
@@ -21,6 +22,6 @@ export default function App() {
           <Route path='/simulate' element={<SimulatePage />} />
         </Routes>
       </main>
-    </>
+    </div>
   )
 }
