@@ -1,4 +1,4 @@
-import { Routes, Route, NavLink, useNavigate, Navigate } from 'react-router-dom'
+import { Routes, Route, NavLink, useNavigate, Navigate, useLocation } from 'react-router-dom'
 import PlayersPage from './pages/PlayersPage'
 import TeamBuilderPage from './pages/TeamBuilderPage'
 import ComparePage from './pages/ComparePage'
@@ -34,7 +34,7 @@ export default function App() {
 }
 
 function NavLinks() {
-  // hide app links when logged out — they'd just bounce to /login
+  useLocation()  // subscribe → re-render on every route change
   if (!isLoggedIn()) return null
   return (
     <>
@@ -48,6 +48,7 @@ function NavLinks() {
 
 function UserMenu() {
   const navigate = useNavigate()
+  useLocation()  // subscribe → re-render on every route change
 
   if (!isLoggedIn()) {
     return (
