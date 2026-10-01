@@ -131,15 +131,23 @@ export default function SimulatePage() {
               <input
                 type="number" min={1} max={38}
                 value={giornata}
-                onChange={(e) => setGiornata(e.target.value)}
+                onChange={(e) => {
+                  const v = Number(e.target.value)
+                  if (Number.isNaN(v)) return setGiornata('')
+                  setGiornata(Math.min(38, Math.max(1, v)))
+                }}
                 style={{ width: 70 }}
               />
             </Field>
             <Field label="Simulations">
               <input
-                type="number" min={1} max={10000} step={100}
+                type="number" min={1} max={1000} step={100}
                 value={sims}
-                onChange={(e) => setSims(e.target.value)}
+                onChange={(e) => {
+                  const v = Number(e.target.value)
+                  if (Number.isNaN(v)) return setSims('')
+                  setSims(Math.min(1000, Math.max(1, v)))
+                }}
                 style={{ width: 90 }}
               />
             </Field>
