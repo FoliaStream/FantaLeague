@@ -6,6 +6,7 @@ export default function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const redirectTo = location.state?.from ?? '/'
+  const flashMessage = location.state?.message
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -32,6 +33,10 @@ export default function LoginPage() {
         <h1 className="auth-title">Sign in</h1>
         <p className="auth-subtitle">Welcome back to FantaLeague.</p>
 
+        {flashMessage && (
+          <p className="auth-success">{flashMessage}</p>
+        )}
+
         <label className="auth-field">
           <span>Username</span>
           <input
@@ -53,6 +58,10 @@ export default function LoginPage() {
             required
           />
         </label>
+
+        <div className="auth-forgot">
+          <Link to="/forgot-password">Forgot password?</Link>
+        </div>
 
         {error && <p className="auth-error">{error}</p>}
 

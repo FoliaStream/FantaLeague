@@ -11,11 +11,14 @@ function authHeaders() {
 
 async function handleResponse(res) {
   if (res.status === 401) {
+    const hadToken = !!localStorage.getItem('token')
     localStorage.removeItem('token')
     localStorage.removeItem('username')
-    // don't loop: only redirect if we're not already on an auth page
+  
     const path = window.location.pathname
-    if (path !== '/login' && path !== '/register') {
+    const publicPaths = ['/login', '/register', '/forgot-password', '/reset-password']
+  
+    if (hadToken && !publicPaths.includes(path)) {
       window.location.href = '/login'
     }
     throw new Error('Session expired')
@@ -74,11 +77,11 @@ export async function login(username, password) {
   return data
 }
 
-export async function register(username, password) {
+export async function register(username, email, password) {
   const res = await fetch(`${BASE_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, email, password }),
   })
   const data = await handleResponse(res)
   localStorage.setItem('token', data.token)
@@ -97,4 +100,22 @@ export function isLoggedIn() {
 
 export function getUsername() {
   return localStorage.getItem('username')
+}
+
+export async function forgotPassword(email) {
+  const res = await fetch(`${BASE_URL}/auth/forgot-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  })
+  return handleResponse(res)
+}
+
+export async function resetPassword(token, password) {
+  const res = await fetch(`${BASE_URL}/auth/reset-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token, password }),
+  })
+  return handleResponse(res)
 }

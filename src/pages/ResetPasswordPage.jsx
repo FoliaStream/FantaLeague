@@ -1,16 +1,32 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { register } from '../api/client'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { resetPassword } from '../api/client'
 
-export default function RegisterPage() {
+export default function ResetPasswordPage() {
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const token = params.get('token') || ''
 
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  if (!token) {
+    return (
+      <div className="auth-shell">
+        <div className="auth-card">
+          <h1 className="auth-title">Invalid link</h1>
+          <p className="auth-subtitle">
+            This password reset link is missing its token.
+          </p>
+          <p className="auth-footer">
+            <Link to="/forgot-password">Request a new link</Link>
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -24,17 +40,16 @@ export default function RegisterPage() {
       setError('Password must be at least 8 characters')
       return
     }
-    if (!email.includes('@')) {
-      setError('Please enter a valid email address')
-      return
-    }
 
     setLoading(true)
     try {
-      await register(username, email, password)
-      navigate('/', { replace: true })
+      await resetPassword(token, password)
+      navigate('/login', {
+        replace: true,
+        state: { message: 'Password updated. You can now sign in.' },
+      })
     } catch (err) {
-      setError(err.message || 'Registration failed')
+      setError(err.message || 'Something went wrong')
     } finally {
       setLoading(false)
     }
@@ -43,34 +58,11 @@ export default function RegisterPage() {
   return (
     <div className="auth-shell">
       <form className="auth-card" onSubmit={handleSubmit}>
-        <h1 className="auth-title">Create account</h1>
-        <p className="auth-subtitle">Pick a username and a password.</p>
+        <h1 className="auth-title">Set a new password</h1>
+        <p className="auth-subtitle">Choose a new password for your account.</p>
 
         <label className="auth-field">
-          <span>Username</span>
-          <input
-            type="text"
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-
-        <label className="auth-field">
-          <span>Email</span>
-          <input
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <small className="auth-hint">Used only for password recovery.</small>
-        </label>
-
-        <label className="auth-field">
-          <span>Password</span>
+          <span>New password</span>
           <input
             type="password"
             autoComplete="new-password"
@@ -83,7 +75,7 @@ export default function RegisterPage() {
         </label>
 
         <label className="auth-field">
-          <span>Confirm password</span>
+          <span>Confirm new password</span>
           <input
             type="password"
             autoComplete="new-password"
@@ -96,11 +88,11 @@ export default function RegisterPage() {
         {error && <p className="auth-error">{error}</p>}
 
         <button type="submit" className="primary auth-submit" disabled={loading}>
-          {loading ? 'Creating account...' : 'Create account'}
+          {loading ? 'Updating...' : 'Update password'}
         </button>
 
         <p className="auth-footer">
-          Already registered? <Link to="/login">Sign in</Link>
+          <Link to="/login">Back to sign in</Link>
         </p>
       </form>
     </div>

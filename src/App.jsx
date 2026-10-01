@@ -1,11 +1,24 @@
-import { Routes, Route, NavLink, useNavigate, Navigate, useLocation } from 'react-router-dom'
+import {
+  Routes,
+  Route,
+  NavLink,
+  useNavigate,
+  Navigate,
+  useLocation,
+  Outlet,
+} from 'react-router-dom'
+
 import PlayersPage from './pages/PlayersPage'
 import TeamBuilderPage from './pages/TeamBuilderPage'
 import ComparePage from './pages/ComparePage'
 import SimulatePage from './pages/SimulatePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
+
 import ProtectedRoute from './components/ProtectedRoute'
+import { TeamsProvider } from './context/TeamsProvider'
 import { isLoggedIn, getUsername, logout } from './api/client'
 
 export default function App() {
@@ -18,15 +31,38 @@ export default function App() {
       </nav>
       <main className="app-main">
         <Routes>
-          <Route path='/login'    element={<RedirectIfAuthed><LoginPage /></RedirectIfAuthed>} />
-          <Route path='/register' element={<RedirectIfAuthed><RegisterPage /></RedirectIfAuthed>} />
+          {/* -------- public routes (no TeamsProvider) -------- */}
+          <Route
+            path="/login"
+            element={<RedirectIfAuthed><LoginPage /></RedirectIfAuthed>}
+          />
+          <Route
+            path="/register"
+            element={<RedirectIfAuthed><RegisterPage /></RedirectIfAuthed>}
+          />
+          <Route
+            path="/forgot-password"
+            element={<RedirectIfAuthed><ForgotPasswordPage /></RedirectIfAuthed>}
+          />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-          <Route path='/'          element={<ProtectedRoute><PlayersPage /></ProtectedRoute>} />
-          <Route path='/teams'     element={<ProtectedRoute><TeamBuilderPage /></ProtectedRoute>} />
-          <Route path='/compare'   element={<ProtectedRoute><ComparePage /></ProtectedRoute>} />
-          <Route path='/simulate'  element={<ProtectedRoute><SimulatePage /></ProtectedRoute>} />
+          {/* -------- protected routes (TeamsProvider only here) -------- */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <TeamsProvider>
+                  <Outlet />
+                </TeamsProvider>
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/"         element={<PlayersPage />} />
+            <Route path="/teams"    element={<TeamBuilderPage />} />
+            <Route path="/compare"  element={<ComparePage />} />
+            <Route path="/simulate" element={<SimulatePage />} />
+          </Route>
 
-          <Route path='*' element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>
@@ -34,7 +70,7 @@ export default function App() {
 }
 
 function NavLinks() {
-  useLocation()  // subscribe → re-render on every route change
+  useLocation()
   if (!isLoggedIn()) return null
   return (
     <>
@@ -48,7 +84,7 @@ function NavLinks() {
 
 function UserMenu() {
   const navigate = useNavigate()
-  useLocation()  // subscribe → re-render on every route change
+  useLocation()
 
   if (!isLoggedIn()) {
     return (

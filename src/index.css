@@ -428,3 +428,19 @@ tbody tr:hover { background: #fafafa; }
   color: var(--text-muted);
   margin-right: var(--space-2);
 }
+
+.auth-forgot {
+  margin: -8px 0 var(--space-3);
+  text-align: right;
+  font-size: 0.82rem;
+}
+
+.auth-success {
+  margin: 0 0 var(--space-3);
+  padding: 8px 10px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 6px;
+  color: #047857;
+  font-size: 0.85rem;
+}
