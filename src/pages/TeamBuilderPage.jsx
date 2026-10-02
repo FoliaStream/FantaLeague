@@ -5,7 +5,11 @@ import { computeTeamStats } from '../utils/teamStats'
 
 // lets "modric" match "Modrić"
 const normalize = (s) =>
-  (s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  (s ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')  // strip combining accents (é → e, ñ → n, etc.)
+    .toLowerCase()
+    .replace(/ı/g, 'i')               // Turkish dotless ı → i
 
 export default function TeamBuilderPage() {
   const {

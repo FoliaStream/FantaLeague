@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-export const MAX_PLAYERS = 25
+export const MAX_PLAYERS = 11
 
 export const TeamsContext = createContext(null)
 
